@@ -1,16 +1,16 @@
 # TIC-TAC-TOE in clojure
 -------------------------
-** to play (or not to play)
+### to play (or not to play)
 
 ```
 - clone this repo
 - lein run
 
-tets
+test
 - lein test
 ```
 
-** how to play
+### how to play
 
 ```
  px ix x-axis index
@@ -30,7 +30,7 @@ you must fill in only 'number number' format
 otherwise it might be crash
 ```
 
-** in future 
+### in future 
 - try/catch this IO hell
 - make its new UI in clojureScript
 - clean up!
