@@ -1,17 +1,17 @@
 (ns clojure-playground.core
   (:require [clojure.string :as str]))
 
-(defn initBoard
+(defn init-board
   []
   [[\- \- \-]
    [\- \- \-]
    [\- \- \-]])
 
-(defn getPos
+(defn get-pos
   [posX posY board]
   (nth (nth board posY) posX))
 
-(defn vecInput
+(defn vec-input
   [input]
   (vec
     (map read-string
@@ -19,45 +19,45 @@
 
 (defn x
   [input]
-  (get (vecInput input) 0))
+  (get (vec-input input) 0))
 
 (defn y
   [input]
-  (get (vecInput input) 1))
+  (get (vec-input input) 1))
 
-(defn putMark
+(defn put-mark
   [input board player]
   (do
     (let [posX (x input), posY (y input)]
       (assoc-in board [posY posX] player))))
 
-(defn printBoard
+(defn print-board
   [board]
   (map println board))
 
-(defn isWin
+(defn is-win
   [b]
   (cond
-    (= (getPos 0 0 b) (getPos 0 1 b) (getPos 0 2 b) "x") true
-    (= (getPos 1 0 b) (getPos 1 1 b) (getPos 1 2 b) "x") true
-    (= (getPos 2 0 b) (getPos 2 1 b) (getPos 2 2 b) "x") true
-    (= (getPos 0 0 b) (getPos 1 0 b) (getPos 2 0 b) "x") true
-    (= (getPos 0 1 b) (getPos 1 1 b) (getPos 2 1 b) "x") true
-    (= (getPos 0 2 b) (getPos 1 2 b) (getPos 2 2 b) "x") true
-    (= (getPos 0 0 b) (getPos 1 1 b) (getPos 2 2 b) "x") true
-    (= (getPos 0 2 b) (getPos 1 1 b) (getPos 2 0 b) "x") true
+    (= (get-pos 0 0 b) (get-pos 0 1 b) (get-pos 0 2 b) "x") true
+    (= (get-pos 1 0 b) (get-pos 1 1 b) (get-pos 1 2 b) "x") true
+    (= (get-pos 2 0 b) (get-pos 2 1 b) (get-pos 2 2 b) "x") true
+    (= (get-pos 0 0 b) (get-pos 1 0 b) (get-pos 2 0 b) "x") true
+    (= (get-pos 0 1 b) (get-pos 1 1 b) (get-pos 2 1 b) "x") true
+    (= (get-pos 0 2 b) (get-pos 1 2 b) (get-pos 2 2 b) "x") true
+    (= (get-pos 0 0 b) (get-pos 1 1 b) (get-pos 2 2 b) "x") true
+    (= (get-pos 0 2 b) (get-pos 1 1 b) (get-pos 2 0 b) "x") true
 
-    (= (getPos 0 0 b) (getPos 0 1 b) (getPos 0 2 b) "o") true
-    (= (getPos 1 0 b) (getPos 1 1 b) (getPos 1 2 b) "o") true
-    (= (getPos 2 0 b) (getPos 2 1 b) (getPos 2 2 b) "o") true
-    (= (getPos 0 0 b) (getPos 1 0 b) (getPos 2 0 b) "o") true
-    (= (getPos 0 1 b) (getPos 1 1 b) (getPos 2 1 b) "o") true
-    (= (getPos 0 2 b) (getPos 1 2 b) (getPos 2 2 b) "o") true
-    (= (getPos 0 0 b) (getPos 1 1 b) (getPos 2 2 b) "o") true
-    (= (getPos 0 2 b) (getPos 1 1 b) (getPos 2 0 b) "o") true
+    (= (get-pos 0 0 b) (get-pos 0 1 b) (get-pos 0 2 b) "o") true
+    (= (get-pos 1 0 b) (get-pos 1 1 b) (get-pos 1 2 b) "o") true
+    (= (get-pos 2 0 b) (get-pos 2 1 b) (get-pos 2 2 b) "o") true
+    (= (get-pos 0 0 b) (get-pos 1 0 b) (get-pos 2 0 b) "o") true
+    (= (get-pos 0 1 b) (get-pos 1 1 b) (get-pos 2 1 b) "o") true
+    (= (get-pos 0 2 b) (get-pos 1 2 b) (get-pos 2 2 b) "o") true
+    (= (get-pos 0 0 b) (get-pos 1 1 b) (get-pos 2 2 b) "o") true
+    (= (get-pos 0 2 b) (get-pos 1 1 b) (get-pos 2 0 b) "o") true
     :else false))
 
-(defn isDraw
+(defn is-draw
   [[row0 row1 row2]]
   (cond
     (or
@@ -79,41 +79,41 @@
     (println "game over") ;then
     (println (if (= player "x") "o" "x") " win")))
 
-(defn displayPlayer
+(defn display-player
   [player]
   (do
     (println "player: " player)
     (println "pX pY")))
 
-(defn isAbleToPut
+(defn is-able-to-put
   [board input]
   (cond
-    (= (getPos (x input) (y input) board) "x") false
-    (= (getPos (x input) (y input) board) "o") false
+    (= (get-pos (x input) (y input) board) "x") false
+    (= (get-pos (x input) (y input) board) "o") false
     :else true))
 
 (defn game
   []
   (do
     (greeting)
-    (loop [isGameOver nil player "x" board (initBoard)]
-      (if (= (isDraw board) true)
+    (loop [is-game-over nil player "x" board (init-board)]
+      (if (= (is-draw board) true)
         (println "game draw")
-        (if (= isGameOver true)
+        (if (= is-game-over true)
           (gameover player) ;then
           (do ;else
-            (displayPlayer player)
+            (display-player player)
             (let [input (try
                           (read-line)
                           (catch Exception e
                             (str "caught exception: " (.getMessage e))))]
-              (if (= (isAbleToPut board input) true)
+              (if (= (is-able-to-put board input) true)
                 (do
-                  (println (printBoard (putMark input board player)))
+                  (println (print-board (put-mark input board player)))
                   (recur
-                    (isWin (putMark input board player))
+                    (is-win (put-mark input board player))
                     (if (= player "x") "o" "x")
-                    (putMark input board player)))
+                    (put-mark input board player)))
                 (do
                   (println "you can't put here")
                   (recur
